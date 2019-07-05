@@ -5,13 +5,13 @@ import time
 import sys
 
 # 自作関数のインポート
-sys.path.append("/kaiyo/my_mod")
+sys.path.append("/2019_kaiyo_ver1/my_mod")
 # ArduinoMegaとシリアル通信してセンサデータをもらう関数
 from my_get_serial import get_data, send_data
 # PCA9685と通信しモータを制御する関数
-from my_motor import go_back, up_down, spinturn, roll, stop, stop_go_back, stop_up_down, br_xr, go_back_each, up_down_each, spinturn_each, solenoid_on, solenoid_off
+from my_motor import go_back, up_down, spinturn, roll, stop, stop_go_back, stop_up_down, go_back_each, up_down_each, spinturn_each
 # 主にロボットの姿勢制御（方向、深度）を行う関数
-from my_balance import yaw, go_yaw, go_yaw_time, go_yaw_rot, diving, diving_while, go_yaw_onoff, go_yaw_onoff_iki, go_yaw_onoff_kaeri, yaw_rot, compass, go_compass_onoff
+from my_balance import
 # プロポ（t19j）を使って、ロボットを制御するための関数
 from my_rc import t10j, t10j_time, t10j_mode_sumo
 # プログラムスタート時にロボットの状態や初期設定の動作を行う関数
