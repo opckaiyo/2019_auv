@@ -71,11 +71,7 @@ if __name__ == '__main__':
                 stop()
                 # エラーの内容を残す
                 error_log_write(e)
-<<<<<<< HEAD
-                print(("\nError =",e))
-=======
                 print("\nError =",e)
->>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
                 print("Error!!!!!!!!!!!!!!!!!!!!!!!")
                 for i in range(20):
                     led_green()
