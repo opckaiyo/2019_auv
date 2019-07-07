@@ -61,11 +61,7 @@ if __name__ == '__main__':
                     # ----------------------------------------
                 except KeyboardInterrupt as e:
                     # Ctrl-cを押したときの処理
-<<<<<<< HEAD
-                    print("\nCtrl-c!!")
-=======
                     print "\nCtrl-c!!"
->>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
                     # プログラムを終了したらデータを作成
 
                     # print e
@@ -75,13 +71,8 @@ if __name__ == '__main__':
                 stop()
                 # エラーの内容を残す
                 error_log_write(e)
-<<<<<<< HEAD
-                print("\nError =",e)
-                print("Error!!!!!!!!!!!!!!!!!!!!!!!")
-=======
                 print "\nError =",e
                 print "Error!!!!!!!!!!!!!!!!!!!!!!!"
->>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
                 for i in range(20):
                     led_green()
                     time.sleep(0.05)
@@ -90,10 +81,6 @@ if __name__ == '__main__':
                 #my_exit()
 
     except KeyboardInterrupt as e:
-<<<<<<< HEAD
-        print("\nCtrl-c!!")
-=======
         print "\nCtrl-c!!"
->>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
         # プログラムを終了するときの処理
         #my_exit()

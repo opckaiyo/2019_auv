@@ -3,6 +3,10 @@ import time
 # import signal
 import sys
 import subprocess
+<<<<<<< HEAD
+=======
+import configparser
+>>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
 import distutils.util
 from concurrent.futures import ThreadPoolExecutor
 sys.path.append("/2019_auv/my_mod")

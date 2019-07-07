@@ -46,6 +46,10 @@ def get_gps_data():
 if __name__ == '__main__':
     # gps_sensor_join_data()
 
+<<<<<<< HEAD
     print((get_gps_data()))
+=======
+    print(get_gps_data())
+>>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
 
     # gps_data_logging()

@@ -93,7 +93,7 @@ def course_pool():
     # 設定地点まで自動で移動
     waypoint_data = {1:{'lat': 26.377735, 'lng': 127.822441667}}
     waypoint(waypoint_data = waypoint_data)
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    print "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
     # # Uターン
     # # yaw(100, set_diving=False)

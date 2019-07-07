@@ -36,7 +36,7 @@ def get_data(val):
             return data[val]
         except SyntaxError:
             # 受信エラー
-            print "Reception Error!!"
+            print("Reception Error!!")
 
 #指定させてデータを返す変数---------------------------------------------
 
@@ -64,6 +64,6 @@ if __name__ == '__main__':
     send_data("reboot")
     while True:
         # print type(get_data("all"))
-        print get_data("all")
+        print(get_data("all"))
 
 # ser.close()

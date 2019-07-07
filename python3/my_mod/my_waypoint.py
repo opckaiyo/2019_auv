@@ -21,10 +21,17 @@ def get_direction_distance(goal_lat, goal_lng):
     now_lat = now_gps_data["lat"]
     now_lng = now_gps_data["lng"]
 
+<<<<<<< HEAD
     print(("now_lat  :", now_lat))
     print(("now_lng  :", now_lng))
     print(("goal_lat :", goal_lat))
     print(("goal_lng :", goal_lng))
+=======
+    print("now_lat  :", now_lat)
+    print("now_lng  :", now_lng)
+    print("goal_lat :", goal_lat)
+    print("goal_lng :", goal_lng)
+>>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
 
     lat_length = goal_lat - now_lat
     lng_length = goal_lng - now_lng
