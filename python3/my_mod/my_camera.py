@@ -5,7 +5,7 @@ import multiprocessing
 import cv2.cv as cv
 import time
 
-class camera2(multiprocessing.Process):
+def camera2(multiprocessing.Process):
 
     capture = cv.CaptureFromCAM(0)
 

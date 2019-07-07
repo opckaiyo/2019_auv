@@ -11,6 +11,7 @@ from my_motor import go_back, up_down, spinturn, roll, stop, stop_go_back, stop_
 from my_rc import t10j
 from my_gpio import led_red, led_green, led_yellow, led_off, led_blue, led_purple, led_lihtblue
 from my_data_sampling import sensor_gps_log
+from my_camera import camera2
 
 # -------------------------------------------------------------------
 
@@ -211,7 +212,7 @@ def first_action():
 
     if set_camera:
         with ThreadPoolExecutor(max_workers=10) as executor:
-            executor.submit(sensor_gps_log, set_sample_rate=0.2)
+            executor.submit(camera2)
 
     if set_countdown:
         # カウントダウン
