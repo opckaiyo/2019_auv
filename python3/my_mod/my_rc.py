@@ -34,16 +34,16 @@ def t10j_map_data():
 def t10j_start_check():
     while True:
         t10j_map = t10j_map_data()
-        print "RY joystick upper!!"
+        print("RY joystick upper!!")
         # if 100 == t10j_map["ly"] and t10j_map["lx"] and t10j_map["ry"] and t10j_map["rx"]:
         if 100 == t10j_map["ry"]:
             led_green()
             while True:
                 t10j_map = t10j_map_data()
-                print "RY joystick center!!"
+                print("RY joystick center!!")
                 if 0 == t10j_map["ry"]:
                     while True:
-                        print "Joysticks OK!!"
+                        print("Joysticks OK!!")
                         led_blue()
                         return 0
 
@@ -55,7 +55,7 @@ def t10j(set_time=10):
     # カウントダウン
     for cnt in range(3, 0, -1):
         # led_red()
-        print cnt
+        print(cnt)
         time.sleep(0.5)
         # led_off()
         time.sleep(0.5)
@@ -63,7 +63,7 @@ def t10j(set_time=10):
     # start_time = time.time()
     while True:
         t10j_map = t10j_map_data()
-        print t10j_map
+        print(t10j_map)
 
         ly = t10j_map["ly"]
         lx = t10j_map["lx"]
@@ -171,7 +171,7 @@ def t10j_mode_sumo():
     while True:
 
         t10j_map = t10j_map_data()
-        print t10j_map
+        print(t10j_map)
 
         ly = t10j_map["ly"]
         lx = t10j_map["lx"]
@@ -209,7 +209,7 @@ def t10j_time(set_time=10):
     # カウントダウン
     for cnt in range(3, 0, -1):
         # led_red()
-        print cnt
+        print(cnt)
         time.sleep(0.5)
         # led_off()
         time.sleep(0.5)
@@ -226,7 +226,7 @@ def t10j_time(set_time=10):
             spinturn(t10j_map["lx"])
 
         ela_time = time.time() - start_time
-        print ela_time
+        print(ela_time)
         if ela_time >= set_time:
             stop()
             break

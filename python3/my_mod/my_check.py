@@ -3,7 +3,7 @@ import time
 # import signal
 import sys
 import subprocess
-import ConfigParser
+import configparser
 import distutils.util
 sys.path.append("/2019_auv/my_mod")
 from my_get_serial import get_data, send_data
@@ -22,106 +22,106 @@ def my_exit():
 # 起動前にマシンの状態をチェック
 def battery_check(set_lipoC2=8, set_lipoC3S3=11):
     data = get_data("all")
-    print
-    print "----------------------------------"
-    print "Lipo checking!!"
+    print()
+    print("----------------------------------")
+    print("Lipo checking!!")
     time.sleep(0.5)
 
 
     if data["lipoC2"] <= set_lipoC2 or data["lipoC3S3"] <= set_lipoC3S3:
         if data["lipoC2"] <= 1 or data["lipoC3S3"] <= 1:
             if data["lipoC2"] <= 1:
-                print "lipoC2 : No connection!!"
+                print("lipoC2 : No connection!!")
             if data["lipoC3S3"] <= 1:
-                print "lipoC3S3 : No connection!!"
+                print("lipoC3S3 : No connection!!")
         else:
             while True:
                 if data["lipoC2"] <= set_lipoC2:
-                    print "lipoC2 : "+str(get_data("lipoC2"))+"[V]"
+                    print("lipoC2 : "+str(get_data("lipoC2"))+"[V]")
                 if data["lipoC3S3"] <= set_lipoC3S3:
-                    print "lipoC3S3 : "+str(get_data("lipoC3S3"))+"[V]"
+                    print("lipoC3S3 : "+str(get_data("lipoC3S3"))+"[V]")
 
-                print "Lipo Low!!"
+                print("Lipo Low!!")
                 led_red()
                 time.sleep(0.1)
                 led_off()
                 time.sleep(0.1)
 
-    print "lipoC2 : "+str(get_data("lipoC2"))+"[V]"
-    print "lipoC3S3 : "+str(get_data("lipoC3S3"))+"[V]"
-    print "Status okay!!"
-    print "----------------------------------"
-    print ""
+    print("lipoC2 : "+str(get_data("lipoC2"))+"[V]")
+    print("lipoC3S3 : "+str(get_data("lipoC3S3"))+"[V]")
+    print("Status okay!!")
+    print("----------------------------------")
+    print("")
 
 
 # 動作確認
 def operation_check():
     while True:
         my_time = 0.002
-        print "Do you check the operation? [Y/n]",
-        key_in = raw_input()
+        print("Do you check the operation? [Y/n]", end=' ')
+        key_in = input()
 
         if key_in == "y" or key_in == "Y":
-            print "Yes operation check!!"
+            print("Yes operation check!!")
             for i in range(100):
                 go_back_each(i, 0)
-                print i
+                print(i)
                 time.sleep(my_time)
             for i in range(100):
                 go_back_each(0, i)
-                print i
+                print(i)
                 time.sleep(my_time)
             stop()
             for i in range(100):
                 up_down_each(0, i)
-                print i
+                print(i)
                 time.sleep(my_time)
             for i in range(100):
                 up_down_each(i, 0)
-                print i
+                print(i)
                 time.sleep(my_time)
             stop()
             for i in range(0, -100, -1):
                 up_down_each(i, 0)
-                print i
+                print(i)
                 time.sleep(my_time)
             for i in range(0, -100, -1):
                 up_down_each(0, i)
-                print i
+                print(i)
                 time.sleep(my_time)
             stop()
             for i in range(0, -100, -1):
                 go_back_each(0, i)
-                print i
+                print(i)
                 time.sleep(my_time)
             for i in range(0, -100, -1):
                 go_back_each(i, 0)
-                print i
+                print(i)
                 time.sleep(my_time)
             stop()
             for i in range(0, -100, -1):
                 go_back_each(i, i)
                 up_down_each(i, i)
-                print i
+                print(i)
                 time.sleep(my_time)
             stop()
             for i in range(0, 100, 1):
                 go_back_each(i, i)
                 up_down_each(i, i)
-                print i
+                print(i)
                 time.sleep(my_time)
             stop()
-            print "It worked normally!!"
+            print("It worked normally!!")
             return 0
         elif key_in == "n" or key_in == "N":
-            print "No operation check!!"
+            print("No operation check!!")
             return 0
 
 
 # 取得した値を読み上げ
 def voice_check(val):
     data = get_data("all")
-    print data[val]
+    print(data[val])
     time.sleep(1)
 
 
@@ -129,7 +129,7 @@ def voice_check(val):
 # 最初の動作
 def first_action():
     # 設定ファイルから設定やパラメータを読み込む
-    inifile = ConfigParser.SafeConfigParser()
+    inifile = configparser.SafeConfigParser()
     inifile.read('/2019_auv/my_config/my_config.ini')
     set_send_reboot =       distutils.util.strtobool(inifile.get('set_mode', 'set_send_reboot'))
     set_battery_check =     distutils.util.strtobool(inifile.get('set_mode', 'set_battery_check'))
@@ -142,19 +142,19 @@ def first_action():
     set_send_pwm =          distutils.util.strtobool(inifile.get('set_mode', 'set_send_pwm'))
     set_countdown =         int(inifile.get('set_mode', 'set_countdown'))
 
-    print
-    print "----------------------------------"
-    print "set_send_reboot :",      set_send_reboot
-    print "set_battery_check :",    set_battery_check
-    print "set_sensor_log :",       set_sensor_log
-    print "set_gps_log :",          set_gps_log
-    print "set_sensor_gps_log :",   set_sensor_gps_log
-    print "set_camera :",           set_camera
-    print "set_operation_check :",  set_operation_check
-    print "set_start_mgs :",        set_operation_check
-    print "set_send_pwm :",         set_send_pwm
-    print "set_countdown :",        set_countdown
-    print "----------------------------------"
+    print()
+    print("----------------------------------")
+    print("set_send_reboot :",      set_send_reboot)
+    print("set_battery_check :",    set_battery_check)
+    print("set_sensor_log :",       set_sensor_log)
+    print("set_gps_log :",          set_gps_log)
+    print("set_sensor_gps_log :",   set_sensor_gps_log)
+    print("set_camera :",           set_camera)
+    print("set_operation_check :",  set_operation_check)
+    print("set_start_mgs :",        set_operation_check)
+    print("set_send_pwm :",         set_send_pwm)
+    print("set_countdown :",        set_countdown)
+    print("----------------------------------")
 
     # 念のためモーターstop
     stop()
@@ -184,10 +184,10 @@ def first_action():
         # スタート動作あり
         while data["mgs"] == 0:
             data =  get_data("all")
-            print data["mgs"]
-            print "Ready !!"
+            print(data["mgs"])
+            print("Ready !!")
 
-    print "\nPlease wait!!"
+    print("\nPlease wait!!")
     # センサー初期化
     send_data("reboot")
     time.sleep(0.5)
@@ -216,12 +216,12 @@ def first_action():
         # カウントダウン
         for cnt in range(set_countdown, 0, -1):
             led_red()
-            print cnt
+            print(cnt)
             time.sleep(0.5)
             led_off()
             time.sleep(0.5)
 
-        print "Go !!"
+        print("Go !!")
 
 
 

@@ -7,7 +7,7 @@ from datetime import datetime
 import sys
 import gps
 import os
-import configparser
+import ConfigParser
 import distutils.util
 
 from my_get_serial import get_data
@@ -15,7 +15,7 @@ from my_get_serial import get_data
 sys.path.append("/2019_auv/my_mod")
 
 #設定ファイル読み込み
-inifile = configparser.SafeConfigParser()
+inifile = ConfigParser.SafeConfigParser()
 inifile.read('/2019_auv/my_config/my_config.ini')
 set_sensor_log =        distutils.util.strtobool(inifile.get('set_mode', 'set_sensor_log'))
 set_gps_log =           distutils.util.strtobool(inifile.get('set_mode', 'set_gps_log'))
@@ -57,7 +57,7 @@ def data_sampling(set_sample_rate=0.2):
 
         except SyntaxError:
             # 受信エラー
-            print("Reception Error!!")
+            print "Reception Error!!"
             # pass
 
 def gps_data_logging():
@@ -77,7 +77,7 @@ def gps_data_logging():
     while True:
         try:
             # gps データ取得
-            report = next(session)
+            report = session.next()
             # print report # To see all report data, uncomment the line below
             if report['class'] == 'TPV':
                 if hasattr(report, 'lat'):
@@ -103,7 +103,7 @@ def gps_data_logging():
             quit()
         except StopIteration:
             session = None
-            print("GPSD has terminated!!")
+            print "GPSD has terminated!!"
 
 def sensor_gps_log(set_sample_rate=0.2):
 
@@ -155,7 +155,7 @@ def sensor_gps_log(set_sample_rate=0.2):
 
                 #gps-----------------------------------------
 
-                report = next(session)
+                report = session.next()
                 # print report # To see all report data, uncomment the line below
                 if report['class'] == 'TPV':
                     if hasattr(report, 'lat'):
@@ -192,14 +192,14 @@ def sensor_gps_log(set_sample_rate=0.2):
 
         except SyntaxError:
             # 受信エラー
-            print("Reception Error!!")
+            print "Reception Error!!"
         except KeyError:
                 pass
         except KeyboardInterrupt:
             quit()
         except StopIteration:
             session = None
-            print("GPSD has terminated!!")
+            print "GPSD has terminated!!"
 
 # -----------------------------------------------------------------------------
 

@@ -17,7 +17,7 @@ def get_gps_data():
     while True:
         try:
             # gps データ取得
-            report = next(session)
+            report = session.next()
             # print report # To see all report data, uncomment the line below
             if report['class'] == 'TPV':
                 if hasattr(report, 'lat'):
@@ -38,7 +38,7 @@ def get_gps_data():
             quit()
         except StopIteration:
             session = None
-            print("GPSD has terminated!!")
+            print "GPSD has terminated!!"
 
 # GPSのデータを取得して還す--------------------------------------------
 
@@ -46,6 +46,6 @@ def get_gps_data():
 if __name__ == '__main__':
     # gps_sensor_join_data()
 
-    print(get_gps_data())
+    print get_gps_data()
 
     # gps_data_logging()

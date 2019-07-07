@@ -21,10 +21,10 @@ def get_direction_distance(goal_lat, goal_lng):
     now_lat = now_gps_data["lat"]
     now_lng = now_gps_data["lng"]
 
-    print("now_lat  :", now_lat)
-    print("now_lng  :", now_lng)
-    print("goal_lat :", goal_lat)
-    print("goal_lng :", goal_lng)
+    print "now_lat  :", now_lat
+    print "now_lng  :", now_lng
+    print "goal_lat :", goal_lat
+    print "goal_lng :", goal_lng
 
     lat_length = goal_lat - now_lat
     lng_length = goal_lng - now_lng
@@ -49,7 +49,7 @@ def get_direction_distance(goal_lat, goal_lng):
     set_rot = int(distance * 30)
 
     goal_gps_data = {"direction":int(direction), "distance":int(distance), "set_rot":set_rot}
-    print(goal_gps_data)
+    print goal_gps_data
 
     return goal_gps_data
 

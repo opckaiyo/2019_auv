@@ -61,7 +61,7 @@ if __name__ == '__main__':
                     # ----------------------------------------
                 except KeyboardInterrupt as e:
                     # Ctrl-cを押したときの処理
-                    print("\nCtrl-c!!")
+                    print "\nCtrl-c!!"
                     # プログラムを終了したらデータを作成
 
                     # print e
@@ -71,8 +71,8 @@ if __name__ == '__main__':
                 stop()
                 # エラーの内容を残す
                 error_log_write(e)
-                print("\nError =",e)
-                print("Error!!!!!!!!!!!!!!!!!!!!!!!")
+                print "\nError =",e
+                print "Error!!!!!!!!!!!!!!!!!!!!!!!"
                 for i in range(20):
                     led_green()
                     time.sleep(0.05)
@@ -81,6 +81,6 @@ if __name__ == '__main__':
                 #my_exit()
 
     except KeyboardInterrupt as e:
-        print("\nCtrl-c!!")
+        print "\nCtrl-c!!"
         # プログラムを終了するときの処理
         #my_exit()
