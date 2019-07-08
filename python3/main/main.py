@@ -35,7 +35,21 @@ def my_main():
     # data = get_data("all")
     # センサデータ表示
     # print data
+    go_yaw(90)
 
+    time.sleep(2.0)
+
+    go_yaw(180)
+
+    time.sleep(2.0)
+
+    go_yaw(270)
+
+    time.sleep(2.0)
+
+    go_yaw(0)
+
+    time.sleep(2.0)
 
 
 
