@@ -32,7 +32,7 @@ from my_waypoint import get_direction_distance
 # この関数にメインのプログラムを記述する
 def my_main():
     # センサーデータ取得
-    data = get_data("all")
+    # data = get_data("all")
     # センサデータ表示
     # print data
 
