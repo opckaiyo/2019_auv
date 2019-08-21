@@ -1,31 +1,15 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-import multiprocessing
-import cv2.cv as cv
+import cv2
 import time
 
-def camera2(multiprocessing.Process):
+def capture_camera():
+        with cv2.VideoCapture(0) as cap:
+            cv2.imshow('camera capture', frame)
 
-    capture = cv.CaptureFromCAM(0)
+def main():
+    capture_camera()
 
-    # 画像サイズの指定
-    cv.SetCaptureProperty(capture,cv.CV_CAP_PROP_FRAME_WIDTH,680)
-    # cv.SetCaptureProperty(capture,cv.CV_CAP_PROP_FRAME_WIDTH,1200)
-    # cv.SetCaptureProperty(capture,cv.CV_CAP_PROP_FRAME_HEIGHT,480)
-    # a = 0
-    # i = 0
-    # while True:
-    #     if a == 0:
-    #         img = cv.QueryFrame(capture)
-    #         cv.ShowImage("camera", img)
-    #         if cv.WaitKey(10) > 0:
-    #             sbreak
-
-    while True:
-        img = cv.QueryFrame(capture)
-        cv.ShowImage("camera", img)
-        if cv.WaitKey(10) > 0:
-            sbreak
-
-    cv.DestroyAllWindows()
+if __name__ == "__main__":
+    main()

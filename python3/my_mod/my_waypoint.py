@@ -21,17 +21,15 @@ def get_direction_distance(goal_lat, goal_lng):
     now_lat = now_gps_data["lat"]
     now_lng = now_gps_data["lng"]
 
-<<<<<<< HEAD
     print(("now_lat  :", now_lat))
     print(("now_lng  :", now_lng))
     print(("goal_lat :", goal_lat))
     print(("goal_lng :", goal_lng))
-=======
+
     print("now_lat  :", now_lat)
     print("now_lng  :", now_lng)
     print("goal_lat :", goal_lat)
     print("goal_lng :", goal_lng)
->>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
 
     lat_length = goal_lat - now_lat
     lng_length = goal_lng - now_lng
@@ -39,13 +37,8 @@ def get_direction_distance(goal_lat, goal_lng):
     # 方位を計算
     #direction = math.atan2(lat_length, lng_length) / 0.01745329
     direction = math.degrees(math.atan2(lat_length, lng_length))
-    #9dセンサの出力は正面が0度だが計算上は右90度が0度なので90度そらしている
+    #9dセンサの出力は正面が0度だが計算上はそこからccwに90度ずれた場所が0度なので90度そらしている
     direction -= 90
-    if direction < -180:
-        direction += 360
-
-    if direction < 0:
-        direction = 360 - abs(direction)
 
     # 距離を計算
     lat_distance = lat_length * 111263.283

@@ -1,4 +1,0 @@
-device reports readiness to read but returned no data (device disconnected or multiple access on port?) : 2019-07-05 14:19:24.448725
-device reports readiness to read but returned no data (device disconnected or multiple access on port?) : 2019-07-05 14:19:26.542679
-device reports readiness to read but returned no data (device disconnected or multiple access on port?) : 2019-07-05 14:19:28.632129
-device reports readiness to read but returned no data (device disconnected or multiple access on port?) : 2019-07-05 14:19:30.723189

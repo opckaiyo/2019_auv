@@ -3,6 +3,12 @@
 import time
 # 自作関数をインポートするためのライブラリ
 import sys
+# 並列処理に必要な関数
+from multiprocessing import Manager, Process
+# シリアル通信に必要な関数
+import serial
+# データ整形に必要
+import ast
 
 # 自作関数のインポート
 sys.path.append("/2019_auv/my_mod")
@@ -27,37 +33,19 @@ from my_gps import get_gps_data
 # GPSによるウェイポイント制御を行う関数
 from my_waypoint import get_direction_distance
 
-# -----------------------------------------------------------------------------
+# ArduinoMEGAとpinで接続---------
+ser = serial.Serial('/dev/ttyS0', 115200)
+# ArduinoMEGAとpinで接続---------
 
-# この関数にメインのプログラムを記述する
+# この関数にメインのプログラムを記述する-------------------------------
+
 def my_main():
-    # センサーデータ取得
-    # data = get_data("all")
-    # センサデータ表示
-    # print data
-    go_yaw(90)
+    go_back(15)
 
-    time.sleep(2.0)
+# この関数にメインのプログラムを記述する-------------------------------
 
-    go_yaw(180)
-
-    time.sleep(2.0)
-
-    go_yaw(270)
-
-    time.sleep(2.0)
-
-    go_yaw(0)
-
-    time.sleep(2.0)
-
-
-
-
-# -------------------------------------------------------------------
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
+    """
     try:
         # モードなどの設定
         first_action()
@@ -98,3 +86,47 @@ if __name__ == '__main__':
         print("\nCtrl-c!!")
         # プログラムを終了するときの処理
         #my_exit()
+    """
+
+    try:
+        with Manager() as manager:
+            data = manager.dict()
+            MV = manager.Value("d", 0.0)
+            goal_yaw = manager.Value("i", 0)
+
+            val = ser.readline()
+            val = ast.literal_eval(val.decode('unicode-escape'))
+            for i in val:
+                data[i] = val[i]
+
+            process1 = Process(target=get_data, args=[data])
+            process2 = Process(target=go_yaw, args=[goal_yaw,data,MV])
+
+            process1.start()
+            process2.start()
+
+            first_action(data)
+
+            while True:
+                my_main()
+
+        process1.join()
+        process2.join()
+
+    except Exception as e:
+        my_exit()
+        print("\n------")
+        print("main.py : ",e)
+        print("------\n")
+
+    except KeyboardInterrupt as key:
+        my_exit()
+        print("\n------")
+        print("main.py : ",key)
+        print("------\n")
+
+    else:
+        my_exit()
+        print("\n------")
+        print("main.py : else")
+        print("------\n")

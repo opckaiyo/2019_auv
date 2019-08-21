@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # sudo pip install pyserial
+# 並列処理に必要な関数
+from multiprocessing import Manager, Process
+import types
 import serial
 import ast
 import time
 from datetime import datetime
-
 import sys
 sys.path.append("/2019_auv/my_mod")
 # from my_tinydb import insert, select, purge
@@ -14,26 +16,35 @@ ser = serial.Serial('/dev/ttyS0', 115200)
 # ArduinoMEGAとUSBケーブル接続
 # ser = serial.Serial('/dev/ttyACM0', 115200)
 
-
 #指定させてデータを返す変数---------------------------------------------
-
+"""
 def get_data(val):
+    # Arduino から一行取得
+    data = ser.readline()
+    # 受信エラー確認
+    try:
+        # dictに変換
+        data = ast.literal_eval(data.decode('unicode-escape'))
+
+        if val == "all": return data
+        # print data
+
+        return data[val]
+    except SyntaxError:
+        # 受信エラー
+        print("Reception Error!!")
+"""
+def get_data(data):
     while True:
         # Arduino から一行取得
-        data = ser.readline()
-
+        val = ser.readline()
         # 受信エラー確認
         try:
             # dictに変換
-            data = ast.literal_eval(data)
+            val = ast.literal_eval(val.decode('unicode-escape'))
+            for i in val:
+                data[i] = val[i]
 
-            if data["yaw"] < 0 :
-                data["yaw"] = 360 - abs(data["yaw"])
-
-            if val == "all": return data
-            # print data
-
-            return data[val]
         except SyntaxError:
             # 受信エラー
             print("Reception Error!!")
@@ -55,7 +66,7 @@ def get_data(val):
 #主に通信開始時に動機をとるために再起動する val = reboot
 
 def send_data(val):
-    ser.write(val)
+    ser.write(val.encode('unicode-escape'))
 
 #ArduinoMEGAにコマンド送信---------------------------------------------
 
@@ -64,10 +75,6 @@ if __name__ == '__main__':
     send_data("reboot")
     while True:
         # print type(get_data("all"))
-<<<<<<< HEAD
         print((get_data("all")))
-=======
-        print(get_data("all"))
->>>>>>> ec917a122f15c46aa57adacad0f39f63806a373d
 
 # ser.close()

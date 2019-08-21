@@ -37,22 +37,22 @@ dc_yl_dir = 5
 
 def dc_xr( val ):
     val, pone = my_map(val)
-    pwm.set_pwm(dc_xr_pwm, 0, val)
+    pwm.set_pwm(dc_xr_pwm, 0, int(val))
     pwm.set_pwm(dc_xr_dir, 0, pone)
 
 def dc_xl( val ):
     val, pone = my_map(val)
-    pwm.set_pwm(dc_xl_pwm, 0, val)
+    pwm.set_pwm(dc_xl_pwm, 0, int(val))
     pwm.set_pwm(dc_xl_dir, 0, pone)
 
 def dc_yr( val ):
     val, pone = my_map(val)
-    pwm.set_pwm(dc_yr_pwm, 0, val)
+    pwm.set_pwm(dc_yr_pwm, 0, int(val))
     pwm.set_pwm(dc_yr_dir, 0, pone)
 
 def dc_yl( val ):
     val, pone = my_map(val)
-    pwm.set_pwm(dc_yl_pwm, 0, val)
+    pwm.set_pwm(dc_yl_pwm, 0, int(val))
     pwm.set_pwm(dc_yl_dir, 0, pone)
 
 #モータ1個の関数-------------------
@@ -149,7 +149,7 @@ def my_map(val):
 if __name__ == '__main__':
     while True:
         try:
-            go_back_each(30,0)
+            spinturn(30)
         except KeyboardInterrupt as e:
             stop()
             break
