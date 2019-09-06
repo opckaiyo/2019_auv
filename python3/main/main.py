@@ -114,19 +114,19 @@ if __name__ == "__main__":
         process2.join()
 
     except Exception as e:
-        my_exit()
         print("\n------")
         print("main.py : ",e)
         print("------\n")
+        my_exit()
 
     except KeyboardInterrupt as key:
-        my_exit()
         print("\n------")
         print("main.py : ",key)
         print("------\n")
+        my_exit()
 
     else:
-        my_exit()
         print("\n------")
         print("main.py : else")
         print("------\n")
+        my_exit()
