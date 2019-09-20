@@ -28,6 +28,12 @@ dc_yr_dir = 14
 # ---------------
 dc_yl_pwm = 10
 dc_yl_dir = 5
+# ---------------
+dc_u_pwm = 11
+dc_u_dir = 15
+# ---------------
+dc_d_pwm = 8
+dc_d_dir = 4
 # --------------------------------
 
 
@@ -54,6 +60,18 @@ def dc_yl( val ):
     val, pone = my_map(val)
     pwm.set_pwm(dc_yl_pwm, 0, int(val))
     pwm.set_pwm(dc_yl_dir, 0, pone)
+
+def dc_u( val ):
+    motor_vals("dc_u", val)
+    val, pone = my_map(val)
+    pwm.set_pwm(dc_u_pwm, 0, val)
+    pwm.set_pwm(dc_u_dir, 0, pone)
+
+def dc_d( val ):
+    motor_vals("dc_d", val)
+    val, pone = my_map(val)
+    pwm.set_pwm(dc_d_pwm, 0, val)
+    pwm.set_pwm(dc_d_dir, 0, pone)
 
 #モータ1個の関数-------------------
 

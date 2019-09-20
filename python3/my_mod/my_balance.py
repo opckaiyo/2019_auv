@@ -20,88 +20,7 @@ from my_motor import go_back, up_down, spinturn, roll, stop, stop_go_back, stop_
 # Ki : 積分制御（I制御)の比例定数
 # Kd : 微分制御（D制御)の比例定数
 
-"""
-def go_yaw(goal):
-    M = 0.00
-    M1 = 0.00
-
-    e = 0.00
-    e1 = 0.00
-    e2 = 0.00
-
-    Kp = 0.001
-    Ki = 0.01
-    Kd = 0.5
-
-    data = get_data("all")
-    now_yaw = data["yaw"]
-
-    if now_yaw < 0:
-        now_yaw = 360 + now_yaw
-
-    if goal < 0:
-        goal = 360 + goal
-
-    if goal == 0:
-        while(not(now_yaw > 359 or now_yaw < 1)):
-
-            data = get_data("all")
-            now_yaw = data["yaw"]
-
-            M1 = M
-            e1 = e
-            e2 = e1
-
-            if now_yaw < 0:
-                now_yaw = 360 + now_yaw
-
-            if abs(goal - now_yaw) > 180:
-                e = 360 - abs(goal - now_yaw)
-            else:
-                e = abs(goal - now_yaw)
-
-            M = M1 + Kp * (e-e1) + Ki * e + Kd * ((e-e1) - (e1-e2))
-            print("now_yaw : ", now_yaw)
-            direction = roteto(now_yaw,goal)
-
-            if M > 30:
-                M = 30
-            elif M < 10:
-                M = 10
-
-            spinturn(M * direction)
-
-    else:
-        while(not(now_yaw - 1 < goal < now_yaw + 1)):
-
-            data = get_data("all")
-            now_yaw = data["yaw"]
-
-            M1 = M
-            e1 = e
-            e2 = e1
-
-            if now_yaw < 0:
-                now_yaw = 360 + now_yaw
-
-            if abs(goal - now_yaw) > 180:
-                e = 360 - abs(goal - now_yaw)
-            else:
-                e = abs(goal - now_yaw)
-
-            M = M1 + Kp * (e-e1) + Ki * e + Kd * ((e-e1) - (e1-e2))
-            direction = roteto(now_yaw,goal)
-
-            if M > 30:
-                M = 30
-            elif M < 10:
-                M = 10
-
-            spinturn(M * direction)
-
-    stop()
-"""
-def go_yaw(goal,data,MV):
+def go_yaw(goal_yaw,data,yaw_MV):
     while True:
         M = 0.00
         M1 = 0.00
@@ -119,8 +38,8 @@ def go_yaw(goal,data,MV):
         if now_yaw < 0:
             now_yaw = 360 + now_yaw
 
-        if goal.value < 0:
-            goal.value = 360 + goal.value
+        if goal_yaw.value < 0:
+            goal_yaw.value = 360 + goal_yaw.value
 
         while True:
 
@@ -133,29 +52,29 @@ def go_yaw(goal,data,MV):
             if now_yaw < 0:
                 now_yaw = 360 + now_yaw
 
-            if abs(goal.value - now_yaw) > 180:
-                e = 360 - abs(goal.value - now_yaw)
+            if abs(goal_yaw.value - now_yaw) > 180:
+                e = 360 - abs(goal_yaw.value - now_yaw)
             else:
-                e = abs(goal.value - now_yaw)
+                e = abs(goal_yaw.value - now_yaw)
 
             M = M1 + Kp * (e-e1) + Ki * e + Kd * ((e-e1) - (e1-e2))
-            direction = roteto(now_yaw,goal)
+            direction = roteto(now_yaw,goal_yaw)
 
             if M > 30:
                 M = 30
             elif M < 10:
                 M = 10
 
-            if goal.value != 0:
-                if now_yaw - 1 < goal.value < now_yaw + 1:
-                    MV.value = 0
+            if goal_yaw.value != 0:
+                if now_yaw - 1 < goal_yaw.value < now_yaw + 1:
+                    yaw_MV.value = 0
                     break
             else:
                 if now_yaw > 359 or now_yaw < 1:
-                    MV.value = 0
+                    yaw_MV.value = 0
                     break
 
-            MV.value = M * direction
+            yaw_MV.value = M * direction
 
     stop()
 
@@ -181,40 +100,42 @@ def roteto(yaw,goal):
 
 #PID制御で水深調整---------------------------------------------------------------
 
-def go_depth(goal):
-    M = 1.00
-    M1 = 0.00
+def go_depth(goal_depth,data,yaw_depth):
+    while True:
+        M = 1.00
+        M1 = 0.00
 
-    e = 0.00
-    e1 = 0.00
-    e2 = 0.00
+        e = 0.00
+        e1 = 0.00
+        e2 = 0.00
 
-    Kp = 0.10
-    Ki = 0.10
-    Kd = 0.10
+        Kp = 0.10
+        Ki = 0.10
+        Kd = 0.10
 
-    now_depth = get_data("depth")
+        now_depth = data("depth")
 
-    while(now_depth - 0.4 < now_depth < now_depth + 0.4):
-        M1 = M
-        e1 = e
-        e2 = e1
-        e = goal - now_depth
+        while(now_depth - 0.4 < now_depth < now_depth + 0.4):
+            M1 = M
+            e1 = e
+            e2 = e1
+            e = goal_depth - now_depth
 
-        M = M1 + Kp * (e-e1) + Ki * e + Kd * ((e-e1) - (e1-e2))
+            M = M1 + Kp * (e-e1) + Ki * e + Kd * ((e-e1) - (e1-e2))
 
-        if goal < now_depth:
-            direction = 1
-        else:
-            direction = -1
+            if goal_depth < now_depth:
+                direction = 1
+            else:
+                direction = -1
 
-        if M > 30:
-            M = 30
-        elif M < 10:
-            m = 10
+            if M > 30:
+                M = 30
+            elif M < 10:
+                m = 10
 
-        up_down(M * direction)
-        time.sleep(0.2)
+            up_down(M * direction)
+            time.sleep(0.2)
+
     stop()
 
 #PID制御で水深調整---------------------------------------------------------------

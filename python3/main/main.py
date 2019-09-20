@@ -37,62 +37,33 @@ from my_waypoint import get_direction_distance
 ser = serial.Serial('/dev/ttyS0', 115200)
 # ArduinoMEGAとpinで接続---------
 
+#　サブプロセス終了のための関数---------------------------------------
+
+def sebprocess_kill():
+    process1.terminate()
+    process2.terminate()
+    process3.terminate()
+
+#　サブプロセス終了のための関数---------------------------------------
+
 # この関数にメインのプログラムを記述する-------------------------------
 
 def my_main():
     go_back(15)
+    print("\n\n")
+    print("yaw_MV", yaw_MV.value, "\n")
+    print("depth_MV", depth_MV.value, "\n")
 
 # この関数にメインのプログラムを記述する-------------------------------
 
 if __name__ == "__main__":
-    """
-    try:
-        # モードなどの設定
-        first_action()
-
-        while True:
-            # 予期せぬエラーが発生した時の処理
-            try:
-                # Ctrl-cを押したときの処理
-                try:
-                    # メインのプログラム
-                    # ----------------------------------------
-                    my_main()
-                    # my_exit()
-                    # break
-                    # ----------------------------------------
-                except KeyboardInterrupt as e:
-                    # Ctrl-cを押したときの処理
-                    print("\nCtrl-c!!")
-                    # プログラムを終了したらデータを作成
-
-                    # print e
-                    my_exit()
-            except Exception as e:
-                # 予期せぬエラーが発生した時の処理
-                stop()
-                # エラーの内容を残す
-                error_log_write(e)
-                print("\nError =",e)
-                print("Error!!!!!!!!!!!!!!!!!!!!!!!")
-                for i in range(20):
-                    led_green()
-                    time.sleep(0.05)
-                    led_off()
-                    time.sleep(0.05)
-                #my_exit()
-
-    except KeyboardInterrupt as e:
-        print("\nCtrl-c!!")
-        # プログラムを終了するときの処理
-        #my_exit()
-    """
-
     try:
         with Manager() as manager:
             data = manager.dict()
-            MV = manager.Value("d", 0.0)
+            yaw_MV = manager.Value("d", 0.0)
+            depth_MV = manager.Value("d", 0.0)
             goal_yaw = manager.Value("i", 0)
+            goal_depth = manager.Value("i", 0)
 
             val = ser.readline()
             val = ast.literal_eval(val.decode('unicode-escape'))
@@ -100,10 +71,12 @@ if __name__ == "__main__":
                 data[i] = val[i]
 
             process1 = Process(target=get_data, args=[data])
-            process2 = Process(target=go_yaw, args=[goal_yaw,data,MV])
+            process2 = Process(target=go_yaw, args=[goal_yaw,data,yaw_MV])
+            process3 = Process(target=go_depth, args=[goal_depth,data,depth_MV])
 
             process1.start()
             process2.start()
+            process3.start()
 
             first_action(data)
 
@@ -112,20 +85,24 @@ if __name__ == "__main__":
 
         process1.join()
         process2.join()
+        process3.join()
 
     except Exception as e:
+        sebprocess_kill()
         print("\n------")
         print("main.py : ",e)
         print("------\n")
         my_exit()
 
     except KeyboardInterrupt as key:
+        sebprocess_kill()
         print("\n------")
         print("main.py : ",key)
         print("------\n")
         my_exit()
 
     else:
+        sebprocess_kill()
         print("\n------")
         print("main.py : else")
         print("------\n")

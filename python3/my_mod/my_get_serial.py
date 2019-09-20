@@ -17,23 +17,6 @@ ser = serial.Serial('/dev/ttyS0', 115200)
 # ser = serial.Serial('/dev/ttyACM0', 115200)
 
 #指定させてデータを返す変数---------------------------------------------
-"""
-def get_data(val):
-    # Arduino から一行取得
-    data = ser.readline()
-    # 受信エラー確認
-    try:
-        # dictに変換
-        data = ast.literal_eval(data.decode('unicode-escape'))
-
-        if val == "all": return data
-        # print data
-
-        return data[val]
-    except SyntaxError:
-        # 受信エラー
-        print("Reception Error!!")
-"""
 def get_data(data):
     while True:
         # Arduino から一行取得

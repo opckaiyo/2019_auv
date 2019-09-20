@@ -132,105 +132,6 @@ def voice_check(val):
 
 
 # 最初の動作
-"""
-def first_action():
-    #マルチタスクに必要
-    executor = concurrent.futures.ProcessPoolExecutor(max_workers=4)
-
-    # 設定ファイルから設定やパラメータを読み込む
-    inifile = configparser.SafeConfigParser()
-    inifile.read('/2019_auv/my_config/my_config.ini')
-    set_send_reboot =       distutils.util.strtobool(inifile.get('set_mode', 'set_send_reboot'))
-    set_battery_check =     distutils.util.strtobool(inifile.get('set_mode', 'set_battery_check'))
-    set_sensor_log =        distutils.util.strtobool(inifile.get('set_mode', 'set_sensor_log'))
-    set_gps_log =           distutils.util.strtobool(inifile.get('set_mode', 'set_gps_log'))
-    set_sensor_gps_log =    distutils.util.strtobool(inifile.get('set_mode', 'set_sensor_gps_log'))
-    set_camera =            distutils.util.strtobool(inifile.get('set_mode', 'set_camera'))
-    set_operation_check =   distutils.util.strtobool(inifile.get('set_mode', 'set_operation_check'))
-    set_start_mgs =         distutils.util.strtobool(inifile.get('set_mode', 'set_start_mgs'))
-    set_send_pwm =          distutils.util.strtobool(inifile.get('set_mode', 'set_send_pwm'))
-    set_countdown =         int(inifile.get('set_mode', 'set_countdown'))
-
-    print()
-    print("----------------------------------")
-    print("set_send_reboot :",      set_send_reboot)
-    print("set_battery_check :",    set_battery_check)
-    print("set_sensor_log :",       set_sensor_log)
-    print("set_gps_log :",          set_gps_log)
-    print("set_sensor_gps_log :",   set_sensor_gps_log)
-    print("set_camera :",           set_camera)
-    print("set_operation_check :",  set_operation_check)
-    print("set_start_mgs :",        set_operation_check)
-    print("set_send_pwm :",         set_send_pwm)
-    print("set_countdown :",        set_countdown)
-    print("----------------------------------")
-
-    # 念のためモーターstop
-    stop()
-
-    if set_send_reboot:
-        # センサー初期化
-        send_data("reboot")
-
-    if set_battery_check:
-        # マシンの状態をチェック
-        battery_check(set_lipoC2=7.0, set_lipoC3S3=11)
-
-    # 待機状態のLEDをセット
-    led_purple()
-
-    if set_operation_check == True:
-        # 動作チェックするか？
-        operation_check()
-
-    if set_start_mgs:
-        # リードスイッチでスタート
-        data =  get_data("all")
-
-        # スタート動作なし
-        # while data["mgs"] == 1:
-        # スタート動作あり
-        while data["mgs"] == 0:
-            data =  get_data("all")
-            print(data["mgs"])
-            print("Ready !!")
-
-    print("\nPlease wait!!")
-    # センサー初期化
-    send_data("reboot")
-    time.sleep(0.5)
-    send_data("reboot")
-    time.sleep(0.5)
-    send_data("reboot")
-    time.sleep(0.5)
-
-    if set_send_pwm:
-        # プロポ受信モード
-        send_data("pwm on")
-
-        # センサを安定状態にするため
-        for i in range(20):
-            data = get_data("all")
-
-    if set_sensor_log or set_gps_log or set_sensor_gps_log:
-        #ログ作成有無
-        executor.submit(sensor_gps_log, set_sample_rate=0.2)
-
-    if set_camera:
-        executor.submit(camera2)
-
-
-    if set_countdown:
-        # カウントダウン
-        for cnt in range(set_countdown, 0, -1):
-            led_red()
-            print(cnt)
-            time.sleep(0.5)
-            led_off()
-            time.sleep(0.5)
-
-        print("Go !!")
-"""
 def first_action(sensordata):
 
     # 設定ファイルから設定やパラメータを読み込む
@@ -310,12 +211,12 @@ def first_action(sensordata):
 
     if set_sensor_log or set_gps_log or set_sensor_gps_log:
         #ログ作成有無
-        process3 = Process(target=sensor_gps_log, args=[sensordata])
-        process3.start()
+        process4 = Process(target=sensor_gps_log, args=[sensordata])
+        process4.start()
 
     if set_camera:
-        process4 = Process(target=camera2)
-        process4.start()
+        process5 = Process(target=camera2)
+        process5.start()
 
 
     if set_countdown:
